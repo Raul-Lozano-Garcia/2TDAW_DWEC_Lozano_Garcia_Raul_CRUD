@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de hamburguesas de Burger King</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="css/estilos.css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/toast.js"></script>
+    <script type="text/javascript" src="js/datos.js"></script>
+    <script type="text/javascript" src="js/app.js" defer></script>
+</head>
+<body class="container-fluid px-5">
+
+<!-- HEADER -->
+<header class="row">
+    <div class="col-md-8 d-flex justify-content-center align-items-center flex-column">
+        <div class="logo">
+            <img src="https://1000marcas.net/wp-content/uploads/2019/12/Logo-Burger-King.png" alt="logo">
+        </div>
+        <h1 class="fw-bold text-uppercase text-center">Lista de hamburguesas</h1>
+    </div>
+    <div class="col-md-3 d-flex justify-content-center flex-column">
+        <form id="datos-busqueda" class="mb-3">
+            <div class="input-group rounded">
+                <input type="search" id="busqueda" class="form-control rounded" placeholder="Búsqueda por ingredientes" aria-label="Search" aria-describedby="search-addon" />
+                <span class="input-group-text border-0" id="search-addon">
+                  <i class="fas fa-search"></i>
+                </span>
+              </div>
+        </form>
+        <div class="d-grid gap-2">
+            <button class="btn btn-primary fw-bold" id="ordenar_asc" type="button">Ordenar por fecha</button>
+            <button class="btn btn-primary fw-bold" id="ordenar_desc" type="button">Ordenar por precio</button>
+        </div>
+    </div>
+</header>
+<!-- FIN HEADER -->
+
+<!-- MAIN -->
+<main class="row g-5 mb-5">
+
+    <!-- OPCIONES -->
+    <section id="opciones" class="col-xl-3">
+        <form id="datos-formu">
+            <div class="form-group mb-3">
+                <label for="nombre" class="fw-bold">Nombre</label>
+                <input type="text" class="form-control" id="nombre" placeholder="Introduce el nombre">
+            </div>
+            <div class="form-group mb-3">
+                <label for="precio" class="fw-bold">Precio</label>
+                <input type="number" class="form-control" id="precio" placeholder="Introduce el precio (en €)" min="1">
+            </div>
+            <div class="form-group mb-3">
+                <label for="imagen" class="fw-bold">Imagen</label>
+                <input type="text" class="form-control" id="imagen" placeholder="Introduce la URL de la imagen">
+            </div>
+            <div class="form-group mb-3">
+                <label for="peso" class="fw-bold">Peso</label>
+                <input type="number" class="form-control" id="peso" placeholder="Introduce el peso (en g)" min="1">
+            </div>
+            <div class="form-group mb-3">
+                <label for="tipo_carne" class="fw-bold">Tipo de carne</label>
+                <select class="form-select" id="tipo_carne">
+                    <option value="whopper">Whopper</option>
+                    <option value="vegetal">Vegetal</option>
+                    <option value="burger">Burger</option>
+                    <option value="pollo">Pollo</option>
+                    <option value="originals">Originals</option>
+                </select>
+            </div>
+            <div class="form-group mb-3">
+                <label for="ingredientes" class="fw-bold">Ingredientes</label>
+                <textarea class="form-control" id="ingredientes" rows="3"></textarea>
+            </div>
+            <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" id="lechuga">
+                <label class="form-check-label fw-bold" for="lechuga">¿Lleva lechuga?</label>
+            </div>
+            <div class="form-group mb-3">
+                <label for="url" class="fw-bold">Página oficial</label>
+                <input type="text" class="form-control" id="url" placeholder="Introduce la URL de la página oficial">
+            </div>
+            <div class="d-grid gap-2">
+                <input id="nuevo" type="submit" value="Enviar" class="btn btn-success fw-bold">
+            </div>
+        </form>
+    </section>
+    <!-- FIN OPCIONES -->
+
+    <!-- LISTA -->
+    <section id="lista" class="col-xl-9">
+        <table class="table text-center align-middle border-dark">
+            <thead class="bg-dark text-light align-middle">
+              <tr>
+                <th scope="col">Imagen</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Peso</th>
+                <th scope="col">Tipo de carne</th>
+                <th scope="col">Ingredientes</th>
+                <th scope="col">¿Lleva lechuga?</th>
+                <th scope="col">Fecha última edición</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody id="datos-list">
+            </tbody>
+          </table>
+    </section>
+    <!-- FIN LISTA -->
+
+    <!-- MENSAJE EMERGENTE-->
+    <div id="mensaje" style="z-index: 9999;" class="fixed-top  mx-auto mt-5 toast text-center" data-delay="3000" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header w-100">
+        <strong class="w-100 mr-auto">Mensaje informativo</strong>
+      </div>
+    </div>
+
+
+
+
+<!--MODAL PARA EDITAR-->
+<div class="modal fade" id="editarModal" tabindex="-1" role="dialog" aria-labelledby="editarModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class=" modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editarModalLabel">Editar datos de la hamburguesa</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">X</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="datos-editar">
+            <input type="hidden" id="claveHamburguesa">
+            <div class="form-group mb-3">
+              <label for="editar_nombre" class="col-form-label fw-bold">Nombre</label>
+              <input type="text" class="form-control" id="editar_nombre">
+            </div>
+            <div class="form-group mb-3">
+              <label for="editar_precio" class="col-form-label fw-bold">Precio</label>
+              <input type="number" class="form-control" id="editar_precio">
+            </div>
+            <div class="form-group mb-3">
+              <label for="editar_imagen class="col-form-label fw-bold">Imagen</label>
+              <input type="text" class="form-control" id="editar_imagen">
+            </div>
+            <div class="form-group mb-3">
+              <label for="editar_peso" class="col-form-label fw-bold">Peso</label>
+              <input type="number" class="form-control" id="editar_peso">
+            </div>
+            <div class="form-group mb-3">
+                <label for="editar_tipo_carne" class="col-form-label fw-bold">Tipo de carne</label>
+                <select class="form-select" id="editar_tipo_carne">
+                    <option value="whopper">Whopper</option>
+                    <option value="vegetal">Vegetal</option>
+                    <option value="burger">Burger</option>
+                    <option value="pollo">Pollo</option>
+                    <option value="originals">Originals</option>
+                </select>
+            </div>
+            <div class="form-group mb-3">
+                <label for="editar_ingredientes" class="col-form-label fw-bold">Ingredientes</label>
+                <textarea class="form-control" id="editar_ingredientes" rows="3"></textarea>
+            </div>
+            <div class="form-check mb-3">
+              <input type="checkbox" class="form-check-input" id="editar_lechuga">
+              <label class="form-check-label fw-bold" for="editar_lechuga">¿Lleva lechuga?</label>
+          </div>
+            <div class="form-group mb-3">
+                <label for="editar_url" class="col-form-label fw-bold">Página oficial</label>
+                <input type="text" class="form-control" id="editar_url" placeholder="Introduce la URL de la página oficial">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <input type="button" class="btn btn-secondary" data-bs-dismiss="modal" value="Cancelar">
+          <input type="submit" id="editar" class="btn btn-success" value="Actualizar datos">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- FIN MODAL PARA EDITAR-->
+
+</main>
+<!-- FIN MAIN -->
+
+</body>
+</html>

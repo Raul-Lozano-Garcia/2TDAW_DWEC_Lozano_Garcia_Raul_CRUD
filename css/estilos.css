@@ -1,0 +1,134 @@
+/* IMPORTACION */
+@font-face {
+    font-family: "Burger King";
+    src: url("fonts/Insanibu.ttf");
+}
+
+/* VARIABLES */
+:root{
+    --principal: #ff8825;
+    --secundario: #f91e00;
+}
+
+/* RESETEO */
+*,*::before,*::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* GENERAL */
+html,body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    scroll-behavior: smooth;
+    background-color: #f9ecdc;
+}
+
+@media only screen and (min-width: 768px) {
+  html,body{
+    font-size: 14px;
+  }
+}
+
+a {
+    text-decoration: none;
+}
+
+li{
+    list-style: none;
+}
+
+img{
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+h1,h2,h3,h4,h5,h6{
+    line-height: 1;
+}
+
+h1,h2{
+    font-family: "Burger King", cursive;
+    line-height: 1.5;
+    color: var(--secundario);
+    letter-spacing: 1px;
+}
+
+.btn-danger{
+    background-color: var(--secundario);
+}
+
+.text-danger{
+    color: var(--secundario) !important;
+}
+
+/* HEADER */
+header{
+    margin-bottom: 2em;
+}
+
+header .logo{
+    width: 300px;
+}
+
+/* OPCIONES */
+#opciones{
+    background-color: var(--principal);
+    border-radius: 15px;
+    padding: 2em;
+}
+
+@media only screen and (max-width:1199px) {
+    #opciones{
+        order: 1; 
+    }
+}
+
+#opciones label{
+    color: whitesmoke;
+}
+
+/* LISTA */
+#lista table{
+    background-color: hsla(27, 100%, 57%, .5);
+
+    /* AÑADE SCROLL A LA TABLA */
+    display: block;
+    overflow: auto;
+    white-space: nowrap;
+    max-height: calc(100vh - 325px);
+}
+
+#lista .img-tabla{
+    width: 100px;
+}
+
+#lista td{
+    padding: 1em;
+}
+
+/* MODAL */
+#editarModal .close{
+    background-color: var(--principal);
+    border: none;
+    color: whitesmoke;
+    font-size: 2em;
+}
+
+.modal-title{
+    color: whitesmoke;
+    font-weight: bold;
+}
+
+.modal-content{
+    background-color: var(--principal);
+    border-radius: 15px;
+    padding: 2em;
+}
+
+.modal-content label{
+    color: whitesmoke;
+}
